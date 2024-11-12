@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Locker",
+  "version": "1.0",
+  "description": "Lock tabs to prevent them from being closed accidentally.",
+  "icons": {
+    "16": "assets/Logo16.png",
+    "32": "assets/Logo32.png",
+    "48": "assets/Logo64.png",
+    "128": "assets/Logo128.png",
+    "256": "assets/Logo256.png"
+  },
+  "permissions": [
+    "tabs",
+    "scripting",
+    "contextMenus",
+    "storage"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_icon": "assets/unlocked.png",
+    "default_title": "Lock/Unlock Tab"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }],
+  "web_accessible_resources": [{
+    "resources": ["assets/*"],
+    "matches": ["<all_urls>"]
+  }],
+  "commands": {
+    "toggle-lock": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Toggle tab lock"
+    }
+  }
+}
