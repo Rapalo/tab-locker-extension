@@ -35,7 +35,7 @@ titleObserver.observe(
 window.addEventListener('beforeunload', (event) => {
   if (isLocked) {
     event.preventDefault();
-    showSilentMessage("This tab is locked and cannot be closed.");
+    showSilentMessage("This tab is locked and cannot be closed.", false);
     return "This tab is locked";
   }
 });
@@ -113,7 +113,7 @@ function updateTabLockState(locked) {
   }
 }
 
-function showSilentMessage(message) {
+function showSilentMessage(message, showIcon = true) {
   // Remove previous alert if it exists
   if (currentAlert) {
     currentAlert.remove();
@@ -136,16 +136,17 @@ function showSilentMessage(message) {
   div.style.transition = "background-color 0.3s ease";
 
   // Add icon
-  let icon = document.createElement("img");
-  icon.src = isLocked ? lockedIconURL : unlockedIconURL;
-  icon.style.width = "16px";
-  icon.style.height = "16px";
+  if (showIcon) {
+    let icon = document.createElement("img");
+    icon.src = isLocked ? lockedIconURL : unlockedIconURL;
+    icon.style.width = "16px";
+    icon.style.height = "16px";
+    div.appendChild(icon);
+  }
 
   // Add text
   let text = document.createElement("span");
   text.textContent = message;
-
-  div.appendChild(icon);
   div.appendChild(text);
   
   document.body.appendChild(div);
