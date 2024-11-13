@@ -31,6 +31,13 @@ titleObserver.observe(
   }
 );
 
+// Add this after the titleObserver setup
+window.addEventListener('focus', () => {
+  if (isLocked && !document.title.includes("🔒")) {
+    document.title = "🔒 " + originalTitle;
+  }
+});
+
 // Add event listener to prevent tab closing
 window.addEventListener('beforeunload', (event) => {
   if (isLocked) {
